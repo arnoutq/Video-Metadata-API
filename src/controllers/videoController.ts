@@ -6,12 +6,10 @@ import { toDTO } from "../mappers/ffprobeMap";
 export const getMetaData = async (req: Request, res: Response) => {
 
     try {
-        const { filename } = req.params;
-        const videoFile = `${filename}.mp4`;
-        const requestUrl = `${process.env.HOST_URL}/${videoFile}`;
+        const { url } = req.body;
 
         /* execute ffprobe command and retrieve video meta data */
-        const metaData = await ffprobe(requestUrl);
+        const metaData = await ffprobe(url);
         /* map the ffprobe results into a DTO */
         const dto: ffprobeDTO = toDTO(metaData);
         /* return the DTO as JSON */
