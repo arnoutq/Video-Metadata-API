@@ -1,0 +1,17 @@
+{
+  "name": "video-metadata-api",
+  "version": "1.0.0",
+  "description": "metadata for videos",
+  "scripts": {
+    "start": "ts-node app"
+  },
+  "main": "app.ts",
+  "repository": "https://github.com/arnoutq/Video-Metadata-API.git",
+  "author": "Arnout Quint",
+  "license": "MIT",
+  "dependencies": {
+    "@types/express": "^4.17.8",
+    "@types/node": "^14.14.6",
+    "express": "^4.17.1"
+  }
+}
