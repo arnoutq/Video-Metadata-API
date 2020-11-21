@@ -3,7 +3,6 @@ import ffprobe from "../commands/ffprobe";
 import { ffprobeDTO } from "../dtos/ffprobeDTO";
 import { toDTO } from "../mappers/ffprobeMap";
 import { validationResult } from "express-validator";
-import {CustomError} from "../utilities/CustomError";
 
 export const getMetaData = async (req: Request, res: Response) => {
 
