@@ -1,26 +1,28 @@
 import { ffprobeDTO } from "../dtos/ffprobeDTO";
-import { Iffprobe } from "../commands/ffprobe";
+import { IaudioStream, Iffprobe, IvideoStream } from "../commands/ffprobe";
 
 /* map the results from ffprobe command */
 export const toDTO = (ffprobe: Iffprobe): ffprobeDTO => {
+    const streams = ffprobe.streams;
+    const audioStream = streams.find(stream => stream.codec_type === "audio") as IaudioStream | undefined;
+    const videoStream = streams.find(stream => stream.codec_type === "video") as IvideoStream | undefined;
+
     return {
-        audio: [{
-            bitRate: parseInt(ffprobe.streams[0].bit_rate),
-            channelLayout: ffprobe.streams[0].channel_layout,
-            channels: ffprobe.streams[0].channels,
-            sampleRate: parseInt(ffprobe.streams[0].sample_rate)
-        }],
-        bitrate: parseInt(ffprobe.format.bit_rate),
-        duration: parseFloat(ffprobe.format.duration) * 1000,
-        video: [
-            {
-                bitRate: parseInt(ffprobe.streams[1].bit_rate),
-                frameRate: parseInt(ffprobe.streams[1].avg_frame_rate),
-                resolution: {
-                    height: ffprobe.streams[1].height,
-                    width: ffprobe.streams[1].width
-                }
+        audio: audioStream ? [{
+            bitRate: parseInt(audioStream.bit_rate),
+            channelLayout: audioStream.channel_layout,
+            channels: audioStream.channels,
+            sampleRate: parseInt(audioStream.sample_rate)
+        }] : false,
+        video: videoStream ? [{
+            bitRate: parseInt(videoStream.bit_rate),
+            frameRate: parseInt(videoStream.avg_frame_rate),
+            resolution: {
+                height: videoStream.height,
+                width: videoStream.width
             }
-        ]
+        }] : false,
+        bitrate: parseInt(ffprobe.format.bit_rate),
+        duration: parseFloat(ffprobe.format.duration) * 1000
     }
 }
