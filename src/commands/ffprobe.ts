@@ -3,7 +3,7 @@ import { exec } from 'child_process';
 import { CustomError } from "../utilities/CustomError";
 const executeCommand = util.promisify(exec);
 
-interface IVideoStream {
+export interface IvideoStream {
     codec_type: "video";
     width: number;
     height: number;
@@ -11,7 +11,7 @@ interface IVideoStream {
     bit_rate: string;
 }
 
-interface IAudioStream {
+export interface IaudioStream {
     codec_type: "audio";
     sample_rate: string;
     channels: number;
@@ -20,11 +20,11 @@ interface IAudioStream {
 }
 
 export interface Iffprobe {
-    streams: [] | [IAudioStream] | [IVideoStream] | [IVideoStream, IAudioStream];
+    streams: [] | [IaudioStream] | [IvideoStream] | [IvideoStream, IaudioStream] | [IaudioStream, IvideoStream];
     format:
         {
-            duration: string,
-            bit_rate: string
+            duration: string;
+            bit_rate: string;
         }
 }
 
