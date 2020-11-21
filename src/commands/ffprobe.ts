@@ -31,7 +31,7 @@ const ffprobe = async (requestUrl: string): Promise<Iffprobe> => {
         const { stdout } = await executeCommand(`${command} ${requestUrl}`);
         return JSON.parse(stdout);
     } catch (e) {
-        throw new CustomError("Error while executing command", 422);
+        throw new CustomError("Video file location not found", 404);
     }
 };
 
